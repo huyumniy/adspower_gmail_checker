@@ -6,6 +6,10 @@ import time
 from utils import get_data_by_date, format_fdata, get_data_from_sheet
 from sheets_api import get_data_from_range
 import nodriver as uc
+from colorama import init, Fore, Style
+
+# Initialize colorama
+init(autoreset=True)
 
 API_KEY = 'http://local.adspower.net:50325'
 
@@ -19,14 +23,14 @@ logging.addLevelName(INFO, 'INFO')
 
 # Configure logger
 class CustomFormatter(logging.Formatter):
-    # Colors
-    grey = "\x1b[38;21m"
-    green = "\x1b[32m"
-    yellow = "\x1b[33m"
-    red = "\x1b[31m"
-    bold_red = "\x1b[31;1m"
-    blue = "\x1b[34m"
-    reset = "\x1b[0m"
+    # Colors using colorama
+    grey = Fore.LIGHTBLACK_EX
+    green = Fore.GREEN
+    yellow = Fore.YELLOW
+    red = Fore.RED
+    bold_red = Fore.RED + Style.BRIGHT
+    blue = Fore.CYAN
+    reset = Style.RESET_ALL
 
     # Format strings for different parts of the log
     log_format = "{time_color}%(asctime)s{reset} [{level_color}%(levelname)s{reset}] {msg_color}%(message)s{reset}"
