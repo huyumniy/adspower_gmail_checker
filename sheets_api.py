@@ -298,6 +298,46 @@ def get_data_from_google_sheet_A(today_datetime):
         print(f"An error occurred: {e}")
         return None
 
+def get_data_from_google_sheets(SHEET_RANGE, SHEET_ID):
+    SHEET_TITLE = 'main'
+    link = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?sheet={SHEET_TITLE}&range={SHEET_RANGE}'
+
+    try:
+        # Send the GET request
+        response = requests.get(link)
+        
+        # Check for a successful response
+        if response.status_code == 200:
+            # Extract content (omit the unnecessary JavaScript wrapping)
+            content = response.text
+            start_index = content.find('(') + 1
+            end_index = content.rfind(')')
+            json_data = content[start_index:end_index]
+
+            # Parse JSON data
+            data = json.loads(json_data)
+            # Extract rows and format them
+            if "table" not in data or "rows" not in data["table"]:
+                print("Invalid data format")
+                return []
+            
+            rows = data["table"]["rows"]
+            formatted_data = []
+            for row in rows:
+                formatted_row = [
+                    cell["v"] if cell is not None else ""  # Use empty string if the cell is null
+                    for cell in row["c"]
+                ]
+                formatted_data.append(formatted_row)
+            
+            return formatted_data
+        else:
+            print(f"Error: Received status code {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
 
 if __name__ == "__main__":
     # Example usage for getting data
