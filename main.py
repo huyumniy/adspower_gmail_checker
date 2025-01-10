@@ -172,7 +172,7 @@ if __name__ == "__main__":
     link = input('link: ')
     adspower_api = input('adspower api: ')
     formatted_link = link.split('/')[5]
-    data = get_data_from_google_sheets(SHEET_RANGE="A2:C", SHEET_ID=formatted_link)
+    data = get_data_from_google_sheets(SHEET_RANGE="B2:D", SHEET_ID=formatted_link)
     ddata = get_data_from_sheet(data)
     fdata = format_fdata(ddata)
     run_test(fdata, adspower_api)
