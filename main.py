@@ -4,7 +4,7 @@ import os
 import requests
 import time
 from utils import get_data_by_date, format_fdata, get_data_from_sheet
-from sheets_api import get_data_from_range
+from sheets_api import get_data_from_range, get_data_from_google_sheets
 import nodriver as uc
 from colorama import init, Fore, Style
 
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     link = input('link: ')
     adspower_api = input('adspower api: ')
     formatted_link = link.split('/')[5]
-    data = get_data_from_range(sheet="Work mail", start_col="B", end_col="C", spreadsheet_id=formatted_link)
+    data = get_data_from_google_sheets(SHEET_RANGE="A2:C", SHEET_ID=formatted_link)
     ddata = get_data_from_sheet(data)
     fdata = format_fdata(ddata)
     run_test(fdata, adspower_api)
